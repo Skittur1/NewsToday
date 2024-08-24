@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/listings.css">
+    <title>Listings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Georgia', sans-serif;
+        }
+
+       
+
+        .caption {
+            position: absolute;
+            bottom: 10px;
+            left:0px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .dots {
+            text-align: center;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #717171;
+        }
+
+        @media (max-width: 480px) {
+            nav h1 {
+                font-size: 1rem;
+            }
+
+            nav ul li a {
+                font-size: 0.5rem;
+            }
+
+            .slidings {
+                height: 200px;
+                width: auto;
+            }
+
+            .caption {
+                font-size: 0.3rem;
+                padding: 5px;
+            }
+
+            .listing-content {
+                font-size: 0.4rem;
+            }
+
+            .listing-sidebar {
+                object-fit: wrap;
+            }
+
+            .footer {
+                font-size: 0.7rem;
+            }
+        }
+
+        .mainbtn, .latestbtn {
+            display: none;
+        }
+        .headline, .headline1 {
+    color: red;
+    animation: flash 1s step-end infinite;
+    text-decoration: underline;
+    font-size: 2vw; /* Responsive font size */
+}
+
+.headline {
+    position: absolute;
+    right: 5vw; /* Responsive right positioning */
+}
+
+@keyframes flash {
+    0%, 50%, 100% {
+        opacity: 1;
+    }
+    25%, 75% {
+        color: orange;
+    }
+}
+
+/* Media Queries for Responsiveness */
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .headline, .headline1 {
+        font-size: 1.5vw;
+    }
+}
+
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .headline, .headline1 {
+        font-size: 2.5vw;
+    }
+}
+
+/* Small screens */
+@media (max-width: 767px) {
+    .headline, .headline1 {
+        font-size: 4vw;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .headline, .headline1 {
+        font-size: 2vw;
+    }
+}
+
+
+.para {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 7px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 2px;
+    transition: background-color 0.5s ease-in-out;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+/* Hover effect */
+.para:hover {
+    background-color: #e9e9e9;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+}
+
+/* Responsive Design */
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .para {
+        font-size: 18px;
+        padding: 10px;
+    }
+}
+
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .para {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
+
+/* Small screens */
+@media (max-width: 767px) {
+    .para {
+        font-size: 14px;
+        padding: 6px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .para {
+        font-size: 12px;
+        padding: 5px;
+    }
+}
+
+.navimg {
+    display: block;
+    max-width: 100%;  /* Ensure the image doesn't overflow its container */
+    height: auto;     /* Maintain the aspect ratio */
+}
+/* Add a flashing effect to the text */
+
+
+    </style>
+</head>
+<body>
+
+    <nav>
+       <div class="navimg">
+            <img src="YsCbFgI8QZa3SC9806TO8g.webp" alt="Your Image">
+            </div>
+      
+        <ul>
+            <li><a href="/entertenment">Entertainment</a></li>
+            <li><a href="/Finance">Finance</a></li>
+            <li><a href="/Jobs">Jobs</a></li>
+            <li><a href="/Sports">Sports</a></li>
+            <li><a href="/World">World</a></li>
+        </ul>
+    </nav>
+
+    <div class="slidings">
+        <div class="slides">
+            <% if (newlatest.length > 0) { %>
+                <% newlatest.forEach(latest => { %>
+                    <div class="latest" data-id="<%= latest._id %>">
+                        <% if (latest.image && latest.image.url) { %>
+                            <img src="<%= latest.image.url %>" alt="Slide Image">
+                        <% } %>
+                        <div class="caption">
+                            <h2><%= latest.h1 %></h2>
+                            <p><%= latest.paragraph %></p>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No latest news available.</p>
+            <% } %>
+        </div>
+        <div class="dots">
+            <% if (newlatest.length > 0) { %>
+                <% newlatest.forEach((_, index) => { %>
+                    <span class="dot"></span>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3 class="headline">Uncover the Latest Headlines That Everyone's Talking About!</h3>
+        <% if (isAdmin) { %>
+            <form action="/listings/new" method="POST">
+                <button class="mainbtn" type="submit" style="display: block;">Create New Listing</button>
+            </form>
+        <% } %>
+        
+
+        <h3 class="headline1">Latest news</h3>
+        <div class="listside">
+            <div class="listings-sidebar">
+                <% if (isAdmin) { %>
+                    <form action="/latest" method="POST">
+                        <button class="latestbtn" type="submit" style="display: block;">Create New Slidings</button>
+                    </form>
+                <% } %>
+                <% if (isAdmin) { %>
+                    <form action="/latestnews" method="POST">
+                        <button class="latestbtn" type="submit" style="display: block;">upload lstestnews </button>
+                    </form>
+                <% } %>
+
+                <% if (newlatestnews.length > 0) { %>
+                    <% newlatestnews.forEach(latest => { %>
+                        <div class="para">
+                        <p><%= latest.latestparagraph %></p>
+                    </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No listings found.</p>
+                <% } %>
+            </div>
+           
+            <div class="listings-container">
+                
+                <% if (listings.length > 0) { %>
+                    <% listings.forEach(listing => { %>
+                        <div class="listing" data-id="<%= listing._id %>">
+                            <% if (listing.image && listing.image.url) { %>
+                                <img src="<%= listing.image.url %>" alt="<%= listing.image.filename || 'Listing Image' %>">
+                            <% } %>
+                            <div class="listing-content">
+                                <h2><%= listing.title %></h2>
+                                <p><%= listing.description %></p>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No listings found.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+        <nav>
+            <ul>
+                <li><a href="terms.html">Terms and Conditions</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <p>This website belongs to News Post and we upload daily news.</p>
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentIndex = 0;
+            const slides = document.querySelector('.slides');
+            const dots = document.querySelectorAll('.dot');
+            const totalSlides = dots.length;
+
+            function showSlide(index) {
+                if (index >= totalSlides) {
+                    currentIndex = 0;
+                } else if (index < 0) {
+                    currentIndex = totalSlides - 1;
+                } else {
+                    currentIndex = index;
+                }
+                slides.style.transform = `translateX(${-currentIndex * 100}%)`;
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[currentIndex].classList.add('active');
+            }
+
+            function nextSlide() {
+                showSlide(currentIndex + 1);
+            }
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+
+            setInterval(nextSlide, 5000); // Change slide every 5 seconds
+
+            showSlide(currentIndex); // Initialize
+
+            // Add click event to each listing
+            document.querySelectorAll('.listing').forEach(listing => {
+                listing.addEventListener('click', () => {
+                    const listingId = listing.getAttribute('data-id');
+                    window.location.href = `/listings/${listingId}`;
+                });
+            });
+        });
+        document.querySelectorAll('.latest').forEach(latest => {
+                latest.addEventListener('click', () => {
+                    const latestId = latest.getAttribute('data-id');
+                    window.location.href = `/latest/slide/${latestId}`;
+                });
+            });
+        
+    </script>
+
+</body>
+</html>
