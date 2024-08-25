@@ -32,9 +32,9 @@ app.use(override("_method"));
 // Connect to MongoDB
 async function main() {
     try {
-        await mongoose.connect("mongodb+srv://swapnilkittur:fRdr6PhlZwBUP6d0@cluster0.2lmyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+        await mongoose.connect("mongodb+srv://swapnilkittur:T7ziSW5IbeiEBVgK@skittur.laof4.mongodb.net/?retryWrites=true&w=majority&appName=Skittur")
            
-       let url="mongodb+srv://swapnilkittur:fRdr6PhlZwBUP6d0@cluster0.2lmyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+       let url="mongodb+srv://swapnilkittur:T7ziSW5IbeiEBVgK@skittur.laof4.mongodb.net/?retryWrites=true&w=majority&appName=Skittur"
         console.log('Connected to MongoDB');
         await initDB();
     } catch (error) {
