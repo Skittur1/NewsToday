@@ -11,35 +11,6 @@ const latest = require("./models/latest.js");
 const axios = require('axios');
 const session=require('express-session')
 
-const ejs = require('ejs');
-const fs = require('fs');
-const path = require('path');
-
-const viewsDir = path.join(__dirname, 'views');
-const outputDir = path.join(__dirname, 'public');
-
-// Function to render EJS files to HTML
-const renderEjsToHtml = (filePath) => {
-  const ejsFile = path.join(viewsDir, filePath);
-  const htmlFile = path.join(outputDir, filePath.replace('.ejs', '.html'));
-
-  ejs.renderFile(ejsFile, {}, (err, str) => {
-    if (err) {
-      console.error(`Error rendering ${filePath}:`, err);
-      return;
-    }
-    fs.mkdirSync(path.dirname(htmlFile), { recursive: true });
-    fs.writeFileSync(htmlFile, str);
-    console.log(`Rendered ${filePath} to ${htmlFile}`);
-  });
-};
-
-// Render each EJS file
-fs.readdirSync(viewsDir).forEach(file => {
-  if (file.endsWith('.ejs')) {
-    renderEjsToHtml(file);
-  }
-});
 
 
 
