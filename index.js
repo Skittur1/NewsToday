@@ -32,9 +32,9 @@ app.use(override("_method"));
 // Connect to MongoDB
 async function main() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/wonderlust')
+        await mongoose.connect("mongodb+srv://swapnilkittur:fRdr6PhlZwBUP6d0@cluster0.2lmyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
            
-       
+       let url="mongodb+srv://swapnilkittur:fRdr6PhlZwBUP6d0@cluster0.2lmyo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         console.log('Connected to MongoDB');
         await initDB();
     } catch (error) {
