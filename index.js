@@ -9,7 +9,9 @@ const app = express();
 const latestnews = require("./models/latestnews.js");
 const latest = require("./models/latest.js");
 const axios = require('axios');
-const session=require('express-session')
+const session=require('express-session');
+
+
 
 
 
@@ -325,15 +327,7 @@ app.post('/latestnews1', async (req,res)=>{
     }
 
 });
-app.get('/',async(req, res) => {
-    try {
-        const listings = await listingModel.find({});
-        res.render('home', { listings });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
-    }
-})
+
 
 
 app.get('/world', async (req, res) => {
