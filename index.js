@@ -76,7 +76,7 @@ main();
 
 
 
-app.get('/listings', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const listings = await listingModel.find({});
         const newlatest = await latest.find({});
@@ -117,7 +117,7 @@ app.delete('/listings/:id', async (req, res) => {
         }
 
         await listingModel.findByIdAndDelete(listingId);
-        res.redirect('/listings');
+        res.redirect('/');
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
@@ -190,7 +190,7 @@ app.post('/listings', async (req, res) => {
         await newListing.save();
 
         // Redirect to the listings page or any other page as needed
-        res.redirect('/listings');
+        res.redirect('/');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error creating new listing');
@@ -219,7 +219,7 @@ app.post('/latest1', async (req, res) => {
         await newlatest.save();
 
         // Redirect to the listings page or any other page as needed
-        res.redirect('/listings');
+        res.redirect('/');
     } catch (error) {
         console.error(error);
         res.status(500).send('Error creating new listing');
@@ -286,7 +286,7 @@ app.put('/sliding/:id/edit', async (req,res)=>{
         if (!updatedLatest) {
             return res.status(404).send('Listing not found');
         }
-        res.redirect('/listings');
+        res.redirect('/');
         
     } catch (error) {
         console.error(error);
@@ -301,7 +301,7 @@ app.delete('/sliding/:id/delete', async (req,res)=>{
         if (!latestItem) {
             return res.status(404).send('Listing not found');
         }
-        res.redirect('/listings');
+        res.redirect('/');
         
     } catch (error) {
         console.error(error);
@@ -318,7 +318,7 @@ app.post('/latestnews1', async (req,res)=>{
             latestparagraph,
         });
         await newLatest.save();
-        res.redirect('/listings');
+        res.redirect('/');
         
     } catch (error) {
         console.error(error);
@@ -469,7 +469,7 @@ app.post('/login', async (req, res) => {
         req.session.user = { email: email };
         req.session.isAdmin = (email === 'swapnilkittur@gmail.com'); // Set isAdmin in session
 
-        res.redirect('/listings'); // Redirect to the listings page
+        res.redirect('/'); // Redirect to the listings page
     } catch (err) {
         console.error(err);
         res.render('login', { message: 'An error occurred, please try again later.' });
