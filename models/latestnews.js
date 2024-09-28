@@ -3,7 +3,10 @@ const Schema=mongoose.Schema;
 const latestnewsSchema=new Schema({
     
     latestparagraph:String,
-    
+    createdAt: {
+        type: Date,
+        default: Date.now // Automatically set to current date
+    }
     
     
 });

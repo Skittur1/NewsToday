@@ -6,10 +6,14 @@ const latestSchema=new Schema({
       
     },
    
-    h1:String,
-    paragraph:String,
+    h1 : String,
+
+    paragraph : String,
     
-    
+    createdAt: {
+        type: Date,
+        default: Date.now // Automatically set to current date
+    }
     
 });
 const latest=mongoose.model("latest",latestSchema);

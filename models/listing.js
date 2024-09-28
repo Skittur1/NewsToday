@@ -17,7 +17,10 @@ const listschema=new Schema({
             url: String
         
     },
-    
+    createdAt: {
+        type: Date,
+        default: Date.now // Automatically set to current date
+    }
     
     
    

@@ -12,7 +12,7 @@ nav {
     padding: 15px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: end;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -41,6 +41,7 @@ nav ul li a {
     font-weight: 700;
     font-size: 0.9rem;
     transition: color 0.3s ease;
+    
 }
 
 nav ul li a:hover {
@@ -48,6 +49,7 @@ nav ul li a:hover {
 }
 
 /* Slideshow */
+/* Slideshow container */
 .slidings {
     position: relative;
     overflow: hidden;
@@ -55,42 +57,70 @@ nav ul li a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #333;
-    margin: 10px;
+    background-color: #ffffff;
+    margin: 10px auto;
     border-radius: 10px;
+    width: 1000px;
 }
 
+/* Slides container */
 .slides {
     display: flex;
-    width: 100%; /* Show only one image at a time */
+    width: 100%;
     height: 100%;
-    transition: transform 1s ease;
-    justify-content: flex-start; /* Start with the first image */
+    transition: transform 1s ease; /* Smooth transition for sliding effect */
+    object-fit: cover;
 }
 
+/* Each slide */
 .latest {
-    width: 100%; /* Each image takes up 100% of the slide container */
+    position: relative;
+    min-width: 100%; /* Ensure each slide takes up the full width */
     height: 100%;
-    flex-shrink: 0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the image in the slide */
+    justify-content: center;
+    transition: opacity 1s ease-in-out; /* Fade effect */
+    opacity: 1; /* Hidden by default */
+    object-fit: cover;
+}
+
+/* Show the active slide */
+.latest.active {
+    opacity: 1; /* Show the active slide */
+    transition: opacity 1s ease-in-out;
 }
 
 .latest img {
-    width: 100%; /* Image fills the container */
-    height: auto; /* Maintain the aspect ratio */
-    object-fit: cover; /* Cover the container area */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
 }
 
+
+.caption {
+    position: absolute; /* Position relative to .latest */
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    /* background: rgba(0, 0, 0, 0.7); Slightly darker for better visibility */
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 10; /* Lower z-index as px is invalid and to avoid issues */
+    max-width: 90%; /* Keeps caption within bounds */
+}
 
 .caption h2 {
     font-size: 1.5rem;
     margin: 0;
 }
 
+
 .caption p {
     font-size: 1rem;
+    font-weight: bold;
 }
 
 /* Listings */
@@ -131,7 +161,8 @@ flex-wrap: wrap;
 gap: 20px;
 }
 .listing {
-flex: 1 1 calc(33.333% - 20px); /* Adjust the width of each listing */
+/* flex: 1   calc(33.333% - 20px); Adjust the width of each listing */
+width:32%;
 box-sizing: border-box;
 margin-bottom: 20px;
 height: 400px;
@@ -172,6 +203,27 @@ overflow:hidden;
 
 .listing p strong {
     color: #333;
+}
+/* Adjusted Company Logo Size */
+.companylogo {
+    position: absolute;
+    top:178px;
+    left:5px;
+    width: 35px; /* Smaller width */
+    height: auto; /* Maintain aspect ratio */
+    opacity: 0.8;
+    z-index: 10; /* Ensure it appears above the image */
+}
+
+.companylogo img {
+    width: 100%; /* Ensure the logo scales with its container */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Ensure the parent containers are positioned relatively */
+.latest, .listing {
+    position: relative; /* Position relative to allow absolute positioning of logo */
+    overflow: hidden; /* Ensure content doesn't spill over */
 }
 
 /* Footer */
@@ -294,11 +346,11 @@ flex: 1 1 calc(50% - 20px); /* Adjust for smaller screens */
 }
 
 /* Media Query for Mobile Devices */
+/* Media Query for Mobile Devices */
 @media (max-width: 768px) {
     nav {
         display: flex;
         align-items: center;
-       
     }
 
     nav ul {
@@ -309,12 +361,18 @@ flex: 1 1 calc(50% - 20px); /* Adjust for smaller screens */
     }
 
     nav ul li {
-        margin: 10px ;
+        margin: 10px;
     }
 
     .slidings {
         height: 30vh;
-        width: auto;
+        width: 1200px;
+    }
+
+    /* Make images inside .slidings responsive */
+    .latest img {
+        width: 100%; /* Ensure the image takes full width of its container */
+        height: auto; /* Maintain aspect ratio */
     }
 
     .caption h2 {
@@ -333,6 +391,7 @@ flex: 1 1 calc(50% - 20px); /* Adjust for smaller screens */
         flex: 1 1 100%;
     }
 }
+
 .listings-sidebar {
     width:30%;
     position: relative;

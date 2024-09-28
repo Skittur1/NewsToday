@@ -34,7 +34,7 @@ app.use(override("_method"));
 // Connect to MongoDB
 async function main() {
     try {
-        await mongoose.connect("mongodb+srv://swapnilkittur:T7ziSW5IbeiEBVgK@skittur.laof4.mongodb.net/?retryWrites=true&w=majority&appName=Skittur")
+        await mongoose.connect("mongodb://localhost:27017/wonderlust")
            
        let url="mongodb+srv://swapnilkittur:T7ziSW5IbeiEBVgK@skittur.laof4.mongodb.net/?retryWrites=true&w=majority&appName=Skittur"
         console.log('Connected to MongoDB');
@@ -78,9 +78,11 @@ main();
 
 app.get('/', async (req, res) => {
     try {
-        const listings = await listingModel.find({});
-        const newlatest = await latest.find({});
-        const newlatestnews = await latestnews.find({});
+        const listings = await listingModel.find({}).sort({ createdAt: -1 });
+
+        // You can apply similar sorting if needed for 'latest' and 'latestnews'
+        const newlatest = await latest.find({}).sort({ createdAt: -1 });
+        const newlatestnews = await latestnews.find({}).sort({ createdAt: -1 });
         const isAdmin = req.session.isAdmin || false; // Get isAdmin from session
         res.render('index', { listings, newlatest,newlatestnews, isAdmin });
     } catch (error) {
@@ -273,7 +275,7 @@ app.post('/sliding/:id/edit', async (req, res) => {
 app.put('/sliding/:id/edit', async (req,res)=>{
     try {
         const latestId = req.params.id;
-        const { image,h1,paragraph,latestparagraph } = req.body;
+        const { image,h1,paragraph } = req.body;
         const updatedLatest = await latest.findByIdAndUpdate(latestId, {
             image:{
                 url: image,  
@@ -327,12 +329,27 @@ app.post('/latestnews1', async (req,res)=>{
     }
 
 });
+app.delete('/:id', async (req, res)=>{
+    try {
+        const id = req.params.id;
+        console.log('Deleting with ID:', id);
+        const item = await latestnews.findByIdAndDelete(id);
+        if (!item) {
+            return res.status(404).send('Item not found');
+        }
+        res.redirect('/');
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
 
+});
 
 
 app.get('/world', async (req, res) => {
     const apiKey = '776ba8b24e8344fd9c26ffd4560c14f3';
-    const url = `https://newsapi.org/v2/everything?q=world&from=2024-08-19&sortBy=publishedAt&apikey=${apiKey}`;
+    const url = `https://newsapi.org/v2/everything?q=world&from=2024-09-19&sortBy=publishedAt&apikey=${apiKey}`;
 
     try {
         const response = await axios.get(url);
@@ -353,7 +370,7 @@ app.get('/world', async (req, res) => {
 
 app.get('/entertenment', async (req, res) => {
     const apiKey = '776ba8b24e8344fd9c26ffd4560c14f3';
-    const url = `https://newsapi.org/v2/everything?q=Bollywood&from=2024-08-18&sortBy=publishedAt&apikey=${apiKey}`;
+    const url = `https://newsapi.org/v2/everything?q=Bollywood&from=2024-09-18&sortBy=publishedAt&apikey=${apiKey}`;
 
     try {
         const response = await axios.get(url);
@@ -373,7 +390,7 @@ app.get('/entertenment', async (req, res) => {
 
 app.get('/finance', async (req, res) => {
     const apiKey = '776ba8b24e8344fd9c26ffd4560c14f3';
-    const url = `https://newsapi.org/v2/everything?q=Finance&from=2024-08-18&sortBy=publishedAt&apikey=${apiKey}`;
+    const url = `https://newsapi.org/v2/everything?q=Finance&from=2024-09-18&sortBy=publishedAt&apikey=${apiKey}`;
 
     try {
         const response = await axios.get(url);
@@ -392,7 +409,7 @@ app.get('/finance', async (req, res) => {
 
 app.get('/sports', async (req, res) => {
     const apiKey = '776ba8b24e8344fd9c26ffd4560c14f3';
-    const url = `https://newsapi.org/v2/everything?q=olympics&from=2024-08-18&sortBy=publishedAt&apikey=${apiKey}`;
+    const url = `https://newsapi.org/v2/everything?q=olympics&from=2024-09-18&sortBy=publishedAt&apikey=${apiKey}`;
 
     try {
         const response = await axios.get(url);
@@ -411,7 +428,7 @@ app.get('/sports', async (req, res) => {
   
 app.get('/jobs', async (req, res) => {
     const apiKey = '776ba8b24e8344fd9c26ffd4560c14f3';
-    const url = `https://newsapi.org/v2/everything?q=Jobs&from=2024-08-18&sortBy=publishedAt&apikey=${apiKey}`;
+    const url = `https://newsapi.org/v2/everything?q=Jobs&from=2024-09-18&sortBy=publishedAt&apikey=${apiKey}`;
 
     try {
         const response = await axios.get(url);
@@ -476,3 +493,30 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Logout route to handle session termination
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error(err);
+            return res.render('error', { message: 'Failed to log out. Please try again.' });
+        }
+        res.clearCookie('connect.sid'); // Clear the session cookie
+        res.redirect('/'); // Redirect to the login page
+    });
+});
+
+app.get('/about', (req, res) => {
+    res.render('aboutus');
+    });
+
+    app.get('/privacy', (req, res) => {
+        res.render('privacy');
+        });
+
+        app.get('/terms', (req, res) => {
+            res.render('terms');
+            });
+
+            app.get('/contact', (req, res) => {
+                res.render('contact');
+                });

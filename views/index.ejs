@@ -13,15 +13,7 @@
 
        
 
-        .caption {
-            position: absolute;
-            bottom: 10px;
-            left:0px;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 10px;
-            border-radius: 5px;
-        }
+
 
         .dots {
             text-align: center;
@@ -129,17 +121,28 @@
         font-size: 2vw;
     }
 }
-
-
 .para {
     box-sizing: border-box;
     width: 100%;
-    padding: 7px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    margin-bottom: 2px;
+    padding: 0px 0  0   0;
+    /* background-color: #ffffff; */
+    border-radius: 2px;
+    margin: 0px;
     transition: background-color 0.5s ease-in-out;
-    font-size: 20px;
+    font-size: 15px;
+    font-family: sans-serif;
+    font-weight: bolder;
+}
+
+.para p{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0px;
+    /* background-color: #ffffff; */
+    border-radius: 8px;
+    margin-bottom: 0px;
+    transition: background-color 0.5s ease-in-out;
+    font-size: 15px;
     font-family: sans-serif;
 }
 
@@ -182,24 +185,35 @@
         font-size: 12px;
         padding: 5px;
     }
+    
 }
 
 .navimg {
-    display: block;
-    max-width: 100%;  /* Ensure the image doesn't overflow its container */
-    height: auto;     /* Maintain the aspect ratio */
+   position: fixed;
+   top:10px;
+   left:10px;
+    width: 100px;
+    height: auto ;
+    margin-right: 10px;
+    background-color: transparent;
+    z-index: 10000;
+    display:block;
+    opacity: 0.8;
 }
 /* Add a flashing effect to the text */
+
+
 
 
     </style>
 </head>
 <body>
+   
 
     <nav>
-       <div class="navimg">
-            <img src="YsCbFgI8QZa3SC9806TO8g.webp" alt="Your Image">
-            </div>
+   
+       
+         
       
         <ul>
             <li><a href="/entertenment">Entertainment</a></li>
@@ -207,8 +221,16 @@
             <li><a href="/Jobs">Jobs</a></li>
             <li><a href="/Sports">Sports</a></li>
             <li><a href="/World">World</a></li>
+            <% if (isAdmin) { %>
+                <li><a href="/admin">Admin Panel</a></li>
+                <li><a href="/logout">Logout</a></li>
+
+            <% } %>
+           
+
         </ul>
     </nav>
+    <img src="/news.webp" alt="Your Image" class="navimg">
 
     <div class="slidings">
         <div class="slides">
@@ -217,6 +239,7 @@
                     <div class="latest" data-id="<%= latest._id %>">
                         <% if (latest.image && latest.image.url) { %>
                             <img src="<%= latest.image.url %>" alt="Slide Image">
+                            
                         <% } %>
                         <div class="caption">
                             <h2><%= latest.h1 %></h2>
@@ -263,7 +286,13 @@
                 <% if (newlatestnews.length > 0) { %>
                     <% newlatestnews.forEach(latest => { %>
                         <div class="para">
-                        <p><%= latest.latestparagraph %></p>
+                        <p><%= latest.latestparagraph %>
+                        <% if (isAdmin) { %>
+                            <form action="/<%=latest._id%>/?_method=DELETE" method="POST">
+                                <button class="latestbtn" type="submit" style="display: block;">delete </button>
+                            </form>
+                        <% } %>
+                    </p>
                     </div>
                     <% }) %>
                 <% } else { %>
@@ -278,6 +307,8 @@
                         <div class="listing" data-id="<%= listing._id %>">
                             <% if (listing.image && listing.image.url) { %>
                                 <img src="<%= listing.image.url %>" alt="<%= listing.image.filename || 'Listing Image' %>">
+                                <div class="companylogo"> <img src="/news.webp" alt="Company Logo"></div>
+                               
                             <% } %>
                             <div class="listing-content">
                                 <h2><%= listing.title %></h2>
@@ -296,10 +327,10 @@
         <p>&copy; 2024 Your Company Name. All rights reserved.</p>
         <nav>
             <ul>
-                <li><a href="terms.html">Terms and Conditions</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="/terms">Terms and Conditions</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
             </ul>
         </nav>
         <p>This website belongs to News Post and we upload daily news.</p>

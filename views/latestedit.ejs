@@ -126,9 +126,8 @@
             <% if (latest.image && latest.image.url) { %>
                 <img src="<%= latest.image.url %>" alt="<%= latest.image.filename || 'Latest Image' %>">
             <% } %>
-            
+            <h4><%=latest.h1%></h4>
             <p><%= latest.paragraph %></p>
-            
             
             <%if(isAdmin){%>
             Update Form
